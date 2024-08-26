@@ -1,4 +1,5 @@
 import json
+import traceback
 from dotenv import load_dotenv
 from langchain.memory import (  # noqa
     ConversationBufferMemory,
@@ -14,7 +15,7 @@ from langchain_openai.chat_models import ChatOpenAI
 
 from app.assistant.handlers.chat_model_start_handler import ChatModelStartHandler
 from langchain.agents import AgentExecutor, create_openai_functions_agent
-from app.assistant.tools.common import example_tool
+from app.assistant.tools.common import example_tool, date_tool
 
 load_dotenv()
 
@@ -23,9 +24,15 @@ class Assistant:
     def __init__(self):
         self.handler = ChatModelStartHandler()
         self.chat = ChatOpenAI(model="gpt-4o", callbacks=[self.handler])
-        self.example = json.dumps(
+        self.example1 = json.dumps(
             {"timeline": {"time": "A few weeks back", "parties": "user and friend"}}
         )
+        self.example2 = json.dumps(
+            {"timeline": {"time": "March", "parties": "alex and naomi"}}
+        )
+
+        print(self.example2)
+
         self.prompt = ChatPromptTemplate(
             messages=[
                 SystemMessage(
@@ -34,8 +41,12 @@ class Assistant:
                         "For example when you recieve:\n"
                         "'a couple of weeks ago me and my friend'\n"
                         "You make a json representation with the important information of the sentence and send back something like:\n"
-                        f"{self.example}\n"
-                        "IMPORTANT: ONLY TRY TO EXTRACT THE IMPORATANT INFORMATION FOR THE JSON OBJECT\n"
+                        f"{self.example1}\n"
+                        "Another example, when you recieve:\n"
+                        "'5 months back alex and naomi'\n"
+                        "If the date or time can be deduced from the input\n"
+                        "IMPORTANT: ONLY TRY TO EXTRACT THE IMPORATANT INFORMATION FOR THE JSON OBJECT, USE THE 'date_tool' FUNCTION AND CREATE THE OUTPUT IN A DATE FORMAT\n"
+                        "IMPORTANT: YOUR OUTPUT MUST ONLY CONTAIN JSON"
                     )
                 ),
                 MessagesPlaceholder(variable_name="chat_history"),
@@ -50,24 +61,20 @@ class Assistant:
 
         self.agent = create_openai_functions_agent(
             llm=self.chat,
-            tools=[example_tool],
+            tools=[example_tool, date_tool],
             prompt=self.prompt,
         )
 
         self.agent_executor = AgentExecutor(
             agent=self.agent,
             verbose=False,
-            tools=[example_tool],
+            tools=[example_tool, date_tool],
             memory=self.memory,
         )
 
     def call_assistant(self, query):
-        story = {"timeline": {"A few weeks back": {}}}
-
         try:
-            res = self.agent_executor.invoke({"input": query})
-            print(res)
+            return self.agent_executor.invoke({"input": query})
         except Exception as e:
             print(e.__traceback__)
-
-        return {"story": json.dumps(story)}
+            print(traceback.format_exc())

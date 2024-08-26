@@ -1,5 +1,6 @@
 import logging
-
+import json
+import re
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
@@ -15,7 +16,11 @@ assistant = Assistant()
 @router.post("/", response_model=StoryboardReturn, status_code=201)
 def storyboard(data: StoryboardCreate):
     try:
-        return assistant.call_assistant(data.model_dump_json())
+        message = assistant.call_assistant(data.model_dump_json())
+
+        message = re.sub("(json|\\n|```|'')", "", message["output"])
+
+        return StoryboardReturn(story=message)
 
     except HTTPException as http_exc:
         logger.error(f"Error while retrieving storyboard: {http_exc}")
