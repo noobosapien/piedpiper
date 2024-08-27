@@ -37,7 +37,7 @@ class GetCurrentDate(BaseModel):
 
 date_tool = StructuredTool.from_function(
     name="get_current_date",
-    description="Gettodays's date in the format day-month-year",
+    description="Get todays's date in the format day-month-year",
     func=get_current_date,
     args_schema=GetCurrentDate,
 )

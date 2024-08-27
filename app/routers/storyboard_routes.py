@@ -17,7 +17,6 @@ assistant = Assistant()
 def storyboard(data: StoryboardCreate):
     try:
         message = assistant.call_assistant(data.model_dump_json())
-
         message = re.sub("(json|\\n|```|'')", "", message["output"])
 
         return StoryboardReturn(story=message)

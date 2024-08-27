@@ -45,6 +45,8 @@ class Assistant:
                         "Another example, when you recieve:\n"
                         "'5 months back alex and naomi'\n"
                         "If the date or time can be deduced from the input\n"
+                        "The output should be like:\n"
+                        f"{self.example2}\n"
                         "IMPORTANT: ONLY TRY TO EXTRACT THE IMPORATANT INFORMATION FOR THE JSON OBJECT, USE THE 'date_tool' FUNCTION AND CREATE THE OUTPUT IN A DATE FORMAT\n"
                         "IMPORTANT: YOUR OUTPUT MUST ONLY CONTAIN JSON"
                     )
