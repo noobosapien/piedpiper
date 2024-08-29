@@ -67,3 +67,4 @@ story
   Invalid JSON: expected value at line 1 column 1 [type=json_invalid, input_value='Given that today is 27th... ["John", "comack"]  }}', input_type=str]
     For further information visit https://errors.pydantic.dev/2.7/v/json_invalid
 2024-08-27 06:13:11,201 - ERROR - Unexpected error while creating storyboard: 'NoneType' object is not subscriptable
+2024-08-29 10:18:01,963 - ERROR - Unexpected error while creating storyboard: Timeline.serialize() missing 1 required positional argument: 'self'

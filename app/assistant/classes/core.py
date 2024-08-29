@@ -8,5 +8,5 @@ class Core:
     def sanitize(self):
         pass
 
-    def to_dict(self):
-        pass
+    def serialize(self):
+        return {}

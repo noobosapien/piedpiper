@@ -31,8 +31,6 @@ class Assistant:
             {"timeline": {"time": "March", "parties": "alex and naomi"}}
         )
 
-        print(self.example2)
-
         self.prompt = ChatPromptTemplate(
             messages=[
                 SystemMessage(

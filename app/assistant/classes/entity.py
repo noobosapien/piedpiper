@@ -1,11 +1,15 @@
-class Entity:
-    def __init__(self):
+from .core import Core
+
+
+class Entity(Core):
+    def __init__(self, gid, name="", main=False, multiple=False):
         self.uid = None
-        self.name = None
+        self.gid = gid
+        self.name = name
         self.general = None
-        self.main = None
+        self.main = main
         self.relation = None
-        self.single = True
+        self.multiple = multiple
 
         self.statements = []
         self.actions_to = []
@@ -38,3 +42,13 @@ class Entity:
 
     def addRelatedEntities(self, entity):
         self.related_entities.append(entity)
+
+    def serialize(self):
+        to_ret = {}
+
+        to_ret["gid"] = self.gid
+        to_ret["name"] = self.name
+        to_ret["main"] = self.main
+        to_ret["multiple"] = self.multiple
+
+        return to_ret

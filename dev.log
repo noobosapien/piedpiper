@@ -2211,3 +2211,4 @@ story
 2024-08-27 11:31:33,329 - DEBUG - receive_response_body.complete
 2024-08-27 11:31:33,329 - DEBUG - response_closed.started
 2024-08-27 11:31:33,329 - DEBUG - response_closed.complete
+2024-08-29 10:18:01,963 - ERROR - Unexpected error while creating storyboard: Timeline.serialize() missing 1 required positional argument: 'self'
