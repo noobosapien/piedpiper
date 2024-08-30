@@ -68,3 +68,5 @@ story
     For further information visit https://errors.pydantic.dev/2.7/v/json_invalid
 2024-08-27 06:13:11,201 - ERROR - Unexpected error while creating storyboard: 'NoneType' object is not subscriptable
 2024-08-29 10:18:01,963 - ERROR - Unexpected error while creating storyboard: Timeline.serialize() missing 1 required positional argument: 'self'
+2024-08-29 14:29:20,948 - ERROR - Unexpected error while creating storyboard: 'statements'
+2024-08-29 14:38:24,977 - ERROR - Unexpected error while creating storyboard: Engine.createTimeline() missing 1 required positional argument: 'id'
