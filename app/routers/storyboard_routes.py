@@ -4,7 +4,7 @@ import re
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-
+from app.assistant.classes.engine import get_engine
 from app.schemas.storyboard_schema import StoryboardReturn, StoryboardCreate
 from app.assistant.agent import Assistant
 
@@ -12,12 +12,17 @@ router = APIRouter()
 logger = logging.getLogger("app")
 assistant = Assistant()
 
+engine = get_engine()
+
 
 @router.post("/", response_model=StoryboardReturn, status_code=201)
 def storyboard(data: StoryboardCreate):
     try:
-        message = assistant.call_assistant(data.model_dump_json())
-        message = re.sub("(json|\\n|```|'')", "", message["output"])
+        engine.clear()
+        engine.createTimeline()
+
+        assistant.call_assistant(data.model_dump_json())
+        message = json.dumps(engine.getTimeline(0).serialize())
 
         return StoryboardReturn(story=message)
 

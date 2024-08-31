@@ -1,24 +1,33 @@
 from .core import Core
 from .entity import Entity
+from app.assistant.classes.engine import get_engine
 
 
 class Action(Core):
-    def __init__(self, by, description, to, perspective):
+    def __init__(self, order, by, description, to, perspective):
         self.description = description
-        self.order = None
+        self.order = order
+
+        engine = get_engine()
 
         if type(to) is Entity:
             self.to = to.gid
+        elif type(to) is int:
+            self.to = engine.getEntityByGid(to)
         else:
             self.to = None
 
         if type(by) is Entity:
             self.by = by.gid
+        elif type(by) is int:
+            self.by = engine.getEntityByGid(by)
         else:
             self.by = None
 
         if type(perspective) is Entity:
             self.perspective = by.gid
+        elif type(perspective) is int:
+            self.perspective = engine.getEntityByGid(perspective)
         else:
             self.perspective = None
 
@@ -44,8 +53,8 @@ class Action(Core):
         to_ret = {}
         to_ret["order"] = self.order
         to_ret["description"] = self.description
-        to_ret["to"] = self.to
-        to_ret["by"] = self.by
-        to_ret["perspective"] = self.perspective
+        to_ret["to"] = self.to.serialize()
+        to_ret["by"] = self.by.serialize()
+        to_ret["perspective"] = self.perspective.serialize()
 
         return to_ret

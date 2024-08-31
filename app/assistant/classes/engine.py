@@ -20,6 +20,9 @@ class Engine(metaclass=EngineMeta):
     def __init__(self) -> None:
         self.timelines = []
 
+    def clear(self):
+        self.timelines = []
+
     def createTimeline(self):
         self.timelines.append(Timeline())
 
@@ -28,6 +31,14 @@ class Engine(metaclass=EngineMeta):
             return None
 
         return self.timelines[index]
+
+    def getEntityByGid(self, gid):
+        timeline = self.getTimeline(0)
+        pt1 = timeline.getPlacetime(0)
+
+        for entity in pt1.entities:
+            if entity.gid == gid:
+                return entity
 
 
 def get_engine() -> Engine:
