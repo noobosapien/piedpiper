@@ -1,0 +1,1 @@
+2024-09-01 10:01:01,745 - ERROR - Unexpected error while creating storyboard: 'NoneType' object has no attribute 'serialize'

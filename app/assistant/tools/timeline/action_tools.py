@@ -14,6 +14,8 @@ def create_action(order, by, description, to, perspective):
     action = Action(order, by, description, to, perspective)
     placetime.addAction(action)
 
+    return True
+
 
 class CreateAction(BaseModel):
     order: int = Field(

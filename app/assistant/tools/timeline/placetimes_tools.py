@@ -15,6 +15,8 @@ def create_place_time(place="", place_vague=True, time="", date="", time_vague=T
     pt1.createPlace(place, place_vague)
     pt1.createTime(time, date, time_vague)
 
+    return True
+
 
 class CreatePlaceTime(BaseModel):
     place: str = Field(description="place name")

@@ -32,7 +32,7 @@ load_dotenv()
 class Assistant:
     def __init__(self):
         self.handler = ChatModelStartHandler()
-        self.chat = ChatOpenAI(model="gpt-4o", callbacks=[self.handler])
+        self.chat = ChatOpenAI(model="gpt-4o-mini", callbacks=[self.handler])
 
         self.prompt = ChatPromptTemplate(
             messages=[

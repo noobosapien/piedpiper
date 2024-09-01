@@ -11,6 +11,8 @@ def create_statement(order, by, description, perspective, thought, about, vague)
     statement = Statement(order, by, description, perspective, thought, about, vague)
     placetime.addStatement(statement)
 
+    return True
+
 
 class CreateStatement(BaseModel):
     order: int = Field(

@@ -59,6 +59,8 @@ def create_entity(gid, name, main=False, multiple=False):
     entity = Entity(gid, name, main, multiple)
     pt1.addEntity(entity)
 
+    return True
+
 
 class CreateEntity(BaseModel):
     gid: int = Field(description="the new id of the entity")
